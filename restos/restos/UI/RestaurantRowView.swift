@@ -53,9 +53,10 @@ struct RestaurantRowView: View {
                     
                     VStack(alignment: .leading) {
                         Text(viewModel.name)
-                            .foregroundColor(.black)
+                            .foregroundColor(Color.primary)
+                            
                         Text("Rating: \(viewModel.rating)")
-                            .foregroundColor(.gray)
+                            .foregroundColor(Color.secondary)
                     }
                     
                     Spacer()

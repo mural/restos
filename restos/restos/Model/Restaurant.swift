@@ -8,12 +8,16 @@
 import Foundation
 
 // MARK: - RestaurantsData
-struct RestaurantsData: Codable {
+struct RestaurantsData: Codable, Equatable {
     let data: [Restaurant]
+    
+    static func == (lhs: RestaurantsData, rhs: RestaurantsData) -> Bool {
+        lhs.data == rhs.data
+    }
 }
 
 // MARK: - Datum
-struct Restaurant: Codable, Identifiable {
+struct Restaurant: Codable, Identifiable, Equatable {
     let id: UUID? = UUID()
     let name, uuid, servesCuisine: String
     let priceRange: Int
@@ -22,6 +26,10 @@ struct Restaurant: Codable, Identifiable {
     let aggregateRatings: AggregateRatings
     let mainPhoto: MainPhoto?
     let bestOffer: BestOffer
+    
+    static func == (lhs: Restaurant, rhs: Restaurant) -> Bool {
+        lhs.id == rhs.id
+    }
 }
 
 // MARK: - Address

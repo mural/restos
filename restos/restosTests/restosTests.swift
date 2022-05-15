@@ -7,23 +7,66 @@
 
 import XCTest
 @testable import restos
+import Combine
+
+class MockRestaurantRepository: RestaurantRepository {
+    
+    var fetchResult: AnyPublisher<RestaurantsData, AppError>!
+
+    func getRestaurants() -> AnyPublisher<RestaurantsData, AppError> {
+        fetchResult
+    }
+    
+    func getFavoritesRestaurants() -> [String] {
+        return [""]
+    }
+    
+    func addRestaurantOnFavorites(uuid: String) {
+    }
+    
+    func removeRestaurantFromFavorites(uuid: String) {
+    }
+    
+}
 
 class restosTests: XCTestCase {
 
+    let restaurantItem = Restaurant(name: "Restaurant name", uuid: "", servesCuisine: "Special", priceRange: 0, currenciesAccepted: "All", address: Address(street: "Street", postalCode: "12012", locality: "City", country: "Country"), aggregateRatings: AggregateRatings(thefork: Thefork(ratingValue: 4.4, reviewCount: 44), tripadvisor: Thefork(ratingValue: 3.3, reviewCount: 33)), mainPhoto: nil, bestOffer:  BestOffer.init(name: "Offer", label: "All 40%"))
+    
+    private var restaurantViewModel: RestaurantViewModel!
+    private var restaurantRepository: MockRestaurantRepository!
+    private var cancellables: Set<AnyCancellable> = []
+
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        try super.setUpWithError()
+        
+        restaurantRepository = MockRestaurantRepository()
+        restaurantViewModel = RestaurantViewModel(restaurantRepository: restaurantRepository)
+        
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        restaurantViewModel = nil
+        restaurantRepository = nil
+        
+        try super.tearDownWithError()
     }
 
     func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+        let expectation = XCTestExpectation(description: "State is set to populated")
+        
+        restaurantViewModel.$state.dropFirst(2).sink { viewState in
+            XCTAssertEqual(viewState, .success(RestaurantsData(data: [self.restaurantItem]).data.map { restaurant in
+                    RestaurantRowViewModel.init(item: restaurant)
+                }))
+            expectation.fulfill()
+            
+        }.store(in: &cancellables)
+        
+        restaurantRepository.fetchResult = Result.success(RestaurantsData(data: [self.restaurantItem])).publisher.eraseToAnyPublisher()
+        restaurantViewModel.fetchRestos()
+        
+        wait(for: [expectation], timeout: 3)
     }
 
     func testPerformanceExample() throws {

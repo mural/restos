@@ -10,6 +10,9 @@
 		FB0B4E8B283102FD004713DD /* RestaurantRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0B4E8A283102FD004713DD /* RestaurantRepository.swift */; };
 		FB0B4E8D2831099F004713DD /* FavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0B4E8C2831099F004713DD /* FavoriteView.swift */; };
 		FB0B4E8F283109F0004713DD /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0B4E8E283109F0004713DD /* FavoriteViewModel.swift */; };
+		FB0B4E9228318511004713DD /* restaurants.json in Resources */ = {isa = PBXBuildFile; fileRef = FB0B4E9128318511004713DD /* restaurants.json */; };
+		FB0B4E9428318571004713DD /* repositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0B4E9328318571004713DD /* repositoryTests.swift */; };
+		FB0B4E97283198B0004713DD /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = FB0B4E96283198B0004713DD /* ViewInspector */; };
 		FBC81419282EE5D300B63992 /* restosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC81418282EE5D300B63992 /* restosApp.swift */; };
 		FBC8141D282EE5D400B63992 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBC8141C282EE5D400B63992 /* Assets.xcassets */; };
 		FBC81420282EE5D400B63992 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBC8141F282EE5D400B63992 /* Preview Assets.xcassets */; };
@@ -51,6 +54,8 @@
 		FB0B4E8A283102FD004713DD /* RestaurantRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantRepository.swift; sourceTree = "<group>"; };
 		FB0B4E8C2831099F004713DD /* FavoriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteView.swift; sourceTree = "<group>"; };
 		FB0B4E8E283109F0004713DD /* FavoriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
+		FB0B4E9128318511004713DD /* restaurants.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = restaurants.json; sourceTree = "<group>"; };
+		FB0B4E9328318571004713DD /* repositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = repositoryTests.swift; sourceTree = "<group>"; };
 		FBC81415282EE5D300B63992 /* restos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = restos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBC81418282EE5D300B63992 /* restosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = restosApp.swift; sourceTree = "<group>"; };
 		FBC8141C282EE5D400B63992 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -94,12 +99,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB0B4E97283198B0004713DD /* ViewInspector in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FB0B4E90283184EC004713DD /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				FB0B4E9128318511004713DD /* restaurants.json */,
+			);
+			path = Responses;
+			sourceTree = "<group>";
+		};
 		FBC8140C282EE5D300B63992 = {
 			isa = PBXGroup;
 			children = (
@@ -144,7 +158,9 @@
 		FBC8142D282EE5D500B63992 /* restosTests */ = {
 			isa = PBXGroup;
 			children = (
+				FB0B4E90283184EC004713DD /* Responses */,
 				FBC8142E282EE5D500B63992 /* restosTests.swift */,
+				FB0B4E9328318571004713DD /* repositoryTests.swift */,
 			);
 			path = restosTests;
 			sourceTree = "<group>";
@@ -265,6 +281,9 @@
 				FBC81436282EE5D500B63992 /* PBXTargetDependency */,
 			);
 			name = restosUITests;
+			packageProductDependencies = (
+				FB0B4E96283198B0004713DD /* ViewInspector */,
+			);
 			productName = restosUITests;
 			productReference = FBC81434282EE5D500B63992 /* restosUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -303,6 +322,7 @@
 			mainGroup = FBC8140C282EE5D300B63992;
 			packageReferences = (
 				FBC81450282F18E800B63992 /* XCRemoteSwiftPackageReference "url-image" */,
+				FB0B4E95283198B0004713DD /* XCRemoteSwiftPackageReference "ViewInspector" */,
 			);
 			productRefGroup = FBC81416282EE5D300B63992 /* Products */;
 			projectDirPath = "";
@@ -329,6 +349,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB0B4E9228318511004713DD /* restaurants.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,6 +390,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBC8142F282EE5D500B63992 /* restosTests.swift in Sources */,
+				FB0B4E9428318571004713DD /* repositoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -687,6 +709,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		FB0B4E95283198B0004713DD /* XCRemoteSwiftPackageReference "ViewInspector" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nalexn/ViewInspector";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.1;
+			};
+		};
 		FBC81450282F18E800B63992 /* XCRemoteSwiftPackageReference "url-image" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/dmytro-anokhin/url-image";
@@ -698,6 +728,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		FB0B4E96283198B0004713DD /* ViewInspector */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB0B4E95283198B0004713DD /* XCRemoteSwiftPackageReference "ViewInspector" */;
+			productName = ViewInspector;
+		};
 		FBC81451282F18E800B63992 /* URLImage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FBC81450282F18E800B63992 /* XCRemoteSwiftPackageReference "url-image" */;

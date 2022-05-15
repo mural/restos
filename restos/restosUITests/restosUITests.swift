@@ -6,6 +6,8 @@
 //
 
 import XCTest
+import SwiftUI
+import ViewInspector //TODO: borrar sino se usa...
 
 class restosUITests: XCTestCase {
 
@@ -27,7 +29,10 @@ class restosUITests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let curryGardenRating95Cell = app.tables.cells["Curry Garden, Rating: 9.5"]
+        XCTAssert(curryGardenRating95Cell.label.contains("Curry Garden"))
+        app.tables/*@START_MENU_TOKEN@*/.buttons["Curry Garden, Rating: 9.5"]/*[[".cells[\"Curry Garden, Rating: 9.5\"].buttons[\"Curry Garden, Rating: 9.5\"]",".buttons[\"Curry Garden, Rating: 9.5\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        XCTAssert(app.navigationBars["_TtGC7SwiftUI19UIHosting"].buttons["Restos 🍽"].label.contains("Restos"))
     }
 
     func testLaunchPerformance() throws {

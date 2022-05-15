@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 import CoreData
 
-enum ViewModelStates {
+enum ViewModelStates: Equatable {
     case idle
     case loading
     case success([RestaurantRowViewModel])

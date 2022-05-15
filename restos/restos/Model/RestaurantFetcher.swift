@@ -8,16 +8,9 @@
 import Foundation
 import Combine
 
-//AppError enum which shows all possible errors
 enum AppError: Error {
     case network(description: String)
     case parsing(description: String)
-}
-
-//Result enum to show success or failure
-enum Result<T> {
-    case success(T)
-    case failure(AppError)
 }
 
 protocol RestaurantService {
