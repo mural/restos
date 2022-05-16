@@ -24,3 +24,8 @@
 - Make generic components to improve reuse
 - Separate Parsing objects from Domain ones and persistance ones
 - Improve UI, like adding animations, customize the iPad view
+
+## Screenshots
+
+![image](https://user-images.githubusercontent.com/759739/168617211-f6005db6-fe7c-46d6-897e-9bd5c5670963.png)
+![image](https://user-images.githubusercontent.com/759739/168617276-9bd1f270-3c9e-47ad-8b67-027eb93865c5.png)
