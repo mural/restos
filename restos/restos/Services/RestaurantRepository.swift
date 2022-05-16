@@ -16,7 +16,7 @@ protocol RestaurantRepositoryProtocol {
 
 class RestaurantRepositoryImplementation : RestaurantRepositoryProtocol {
      
-    @Published var restaurantFavoritesEntities: [RestaurantEntity] = []
+    var restaurantFavoritesEntities: [RestaurantEntity] = []
     private var fetchRequest : NSFetchRequest<RestaurantEntity> = RestaurantEntity.fetchRequest()
     private var restaurantFavoritesUUIDs = [""]
     private let restaurantService: RestaurantServiceProtocol

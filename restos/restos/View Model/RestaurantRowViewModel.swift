@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RestaurantRowViewModel: Identifiable {
                 
-    let item: Restaurant
+    private let item: Restaurant
     
     var id: String {
         return item.uuid
@@ -19,16 +19,24 @@ struct RestaurantRowViewModel: Identifiable {
         return item.name
     }
     
-    var rating: String {
-        return String(item.aggregateRatings.thefork.ratingValue)
+    var rating: Double {
+        return item.aggregateRatings.thefork.ratingValue
     }
     
     var photoURL: String {
         return item.mainPhoto?.the160X120 ?? ""
     }
     
+    func getAddress() -> String {
+        return item.getFormattedAddress()
+    }
+    
     init(item: Restaurant) {
         self.item = item
+    }
+    
+    func createFavoriteViewModel(restaurantRepository: RestaurantRepositoryProtocol) -> FavoriteViewModel {
+        return FavoriteViewModel(item: item, restaurantRepository: restaurantRepository)
     }
 }
 

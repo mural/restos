@@ -35,8 +35,8 @@ class RestaurantViewModel: ObservableObject {
                 response.data.map { restaurant in
                     RestaurantRowViewModel.init(item: restaurant)
                 }.sorted { restaurantRowViewModel1, restaurantRowViewModel2 in
-                    restaurantRowViewModel1.item.aggregateRatings.thefork.ratingValue
-                    > restaurantRowViewModel2.item.aggregateRatings.thefork.ratingValue
+                    restaurantRowViewModel1.rating
+                    > restaurantRowViewModel2.rating
                 }
             }
             .receive(on: DispatchQueue.main)

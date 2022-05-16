@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FB0B4E8B283102FD004713DD /* RestaurantRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0B4E8A283102FD004713DD /* RestaurantRepositoryProtocol.swift */; };
+		FB0B4E8B283102FD004713DD /* RestaurantRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0B4E8A283102FD004713DD /* RestaurantRepository.swift */; };
 		FB0B4E8D2831099F004713DD /* FavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0B4E8C2831099F004713DD /* FavoriteView.swift */; };
 		FB0B4E8F283109F0004713DD /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0B4E8E283109F0004713DD /* FavoriteViewModel.swift */; };
 		FB0B4E9228318511004713DD /* restaurants.json in Resources */ = {isa = PBXBuildFile; fileRef = FB0B4E9128318511004713DD /* restaurants.json */; };
@@ -50,7 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		FB0B4E8A283102FD004713DD /* RestaurantRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantRepositoryProtocol.swift; sourceTree = "<group>"; };
+		FB0B4E8A283102FD004713DD /* RestaurantRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantRepository.swift; sourceTree = "<group>"; };
 		FB0B4E8C2831099F004713DD /* FavoriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteView.swift; sourceTree = "<group>"; };
 		FB0B4E8E283109F0004713DD /* FavoriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
 		FB0B4E9128318511004713DD /* restaurants.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = restaurants.json; sourceTree = "<group>"; };
@@ -225,7 +225,7 @@
 		FBCBFE912831C354007E1636 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				FB0B4E8A283102FD004713DD /* RestaurantRepositoryProtocol.swift */,
+				FB0B4E8A283102FD004713DD /* RestaurantRepository.swift */,
 				FBC8144C282F042900B63992 /* RestaurantFetcher.swift */,
 				FBC814592830689900B63992 /* Parser.swift */,
 			);
@@ -373,7 +373,7 @@
 			files = (
 				FBC8144B282F03D000B63992 /* Restaurant.swift in Sources */,
 				FBC81422282EE5D400B63992 /* Persistence.swift in Sources */,
-				FB0B4E8B283102FD004713DD /* RestaurantRepositoryProtocol.swift in Sources */,
+				FB0B4E8B283102FD004713DD /* RestaurantRepository.swift in Sources */,
 				FBC81419282EE5D300B63992 /* restosApp.swift in Sources */,
 				FBC8146728307B0E00B63992 /* ActivityIndicator.swift in Sources */,
 				FBC81465283074D700B63992 /* MapView.swift in Sources */,
