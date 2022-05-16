@@ -18,11 +18,11 @@ enum ViewModelStates: Equatable {
 
 class RestaurantViewModel: ObservableObject {
     @Published private(set) var state = ViewModelStates.idle
-    private let restaurantRepository: RestaurantRepository
+    private let restaurantRepository: RestaurantRepositoryProtocol
     private var disposables = Set<AnyCancellable>()
     
     init(
-        restaurantRepository: RestaurantRepository
+        restaurantRepository: RestaurantRepositoryProtocol
     ) {
         self.restaurantRepository = restaurantRepository
     }
@@ -34,6 +34,9 @@ class RestaurantViewModel: ObservableObject {
             .map { response in
                 response.data.map { restaurant in
                     RestaurantRowViewModel.init(item: restaurant)
+                }.sorted { restaurantRowViewModel1, restaurantRowViewModel2 in
+                    restaurantRowViewModel1.item.aggregateRatings.thefork.ratingValue
+                    > restaurantRowViewModel2.item.aggregateRatings.thefork.ratingValue
                 }
             }
             .receive(on: DispatchQueue.main)
@@ -65,7 +68,7 @@ extension RestaurantViewModel {
 
 enum RestaurantBuilder {
     static func makeRestaurantView(
-        restaurantRepository: RestaurantRepository
+        restaurantRepository: RestaurantRepositoryProtocol
     ) -> some View {
         let viewModel = RestaurantViewModel(
             restaurantRepository: restaurantRepository)

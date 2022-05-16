@@ -12,7 +12,7 @@ class FavoriteViewModel: Identifiable, ObservableObject {
     @Published var updatedFav: Bool = false
         
     private let item: Restaurant
-    private let restaurantRepository: RestaurantRepository
+    private let restaurantRepository: RestaurantRepositoryProtocol
     
     var id: String {
         return item.uuid
@@ -26,7 +26,7 @@ class FavoriteViewModel: Identifiable, ObservableObject {
         return item.mainPhoto?.the160X120 ?? ""
     }
     
-    init(item: Restaurant, restaurantRepository: RestaurantRepository) {
+    init(item: Restaurant, restaurantRepository: RestaurantRepositoryProtocol) {
         self.item = item
         self.restaurantRepository = restaurantRepository
     }

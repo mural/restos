@@ -8,12 +8,12 @@
 import Foundation
 import Combine
 
-enum AppError: Error {
+enum AppError: Error, Equatable {
     case network(description: String)
     case parsing(description: String)
 }
 
-protocol RestaurantService {
+protocol RestaurantServiceProtocol {
     func getRestaurants() -> AnyPublisher<RestaurantsData, AppError>
 }
 
@@ -25,7 +25,7 @@ class RestaurantAPI {
     }
 }
 
-extension RestaurantAPI: RestaurantService {
+extension RestaurantAPI: RestaurantServiceProtocol {
     func getRestaurants() -> AnyPublisher<RestaurantsData, AppError> {
         return restosAPICall(with: makeRestosComponents())
     }
@@ -50,20 +50,30 @@ extension RestaurantAPI: RestaurantService {
 }
 
 private extension RestaurantAPI {
-  struct RestosComponents {
-    static let scheme = "https"
-    static let host = "alanflament.github.io"
-    static let path = "/TFTest/test.json"
-  }
-  
-  func makeRestosComponents() -> URLComponents {
-    var components = URLComponents()
-    components.scheme = RestosComponents.scheme
-    components.host = RestosComponents.host
-    components.path = RestosComponents.path
+    struct RestosComponents {
+        static let scheme = "https"
+    }
     
-    return components
-  }
+    func makeRestosComponents() -> URLComponents {
+        var components = URLComponents()
+        components.scheme = RestosComponents.scheme
+        components.host = getAPIParams(param: "API_HOST")
+        components.path = getAPIParams(param: "API_PATH")
+        
+        return components
+    }
+
+    private func getAPIParams(param: String) -> String {
+        guard let filePath = Bundle.main.path(forResource: "Info", ofType: "plist") else {
+            return ""
+        }
+        let plist = NSDictionary(contentsOfFile: filePath)
+        guard let value = plist?.object(forKey: param) as? String else {
+            return ""
+        }
+        return value
+        
+    }
 }
 
 

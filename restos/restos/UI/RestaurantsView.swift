@@ -10,9 +10,9 @@ import SwiftUI
 struct RestaurantsView: View {
     
     @ObservedObject var viewModel: RestaurantViewModel
-    var restaurantRepository: RestaurantRepository
+    var restaurantRepository: RestaurantRepositoryProtocol
     
-    init(viewModel: RestaurantViewModel, restaurantRepository: RestaurantRepository) {
+    init(viewModel: RestaurantViewModel, restaurantRepository: RestaurantRepositoryProtocol) {
         self.viewModel = viewModel
         self.restaurantRepository = restaurantRepository
     }
@@ -25,7 +25,7 @@ struct RestaurantsView: View {
             case .loading:
                 ActivityIndicator(style: .large)
             case .failure:
-                Text("Error...")
+                Text("There was an error trying to download the Restaurants, please try again later.")
             case .success(let data):
                 List {
                     if data.isEmpty {
@@ -46,14 +46,14 @@ struct RestaurantsView: View {
 private extension RestaurantsView {
     var loadingSection: some View {
         Section {
-            Text("Loading...")
+            Text("Loading Restaurants...")
                 .foregroundColor(.gray)
         }
     }
     
     var emptySection: some View {
         Section {
-            Text("No restaurants")
+            Text("No Restaurants")
                 .foregroundColor(.gray)
         }
     }
@@ -62,9 +62,9 @@ private extension RestaurantsView {
 
 struct RestaurantView: View {
     var data: [RestaurantRowViewModel]
-    var restaurantRepository: RestaurantRepository
+    var restaurantRepository: RestaurantRepositoryProtocol
     
-    init(data: [RestaurantRowViewModel], restaurantRepository: RestaurantRepository) {
+    init(data: [RestaurantRowViewModel], restaurantRepository: RestaurantRepositoryProtocol) {
         self.data = data
         self.restaurantRepository = restaurantRepository
     }
@@ -75,10 +75,8 @@ struct RestaurantView: View {
                 restaurantRowViewModel in
                 NavigationLink {
                     Text(restaurantRowViewModel.item.name)
-                    
-                    let address = restaurantRowViewModel.item.address  //TODO: use model !
-                    let formattedAddress = "\(address.street), \(address.postalCode), \(address.locality), \(address.country)"
-                    MapView(address: formattedAddress)
+
+                    MapView(address: restaurantRowViewModel.item.getFormattedAddress())
                         .frame(width: 400, height: 260, alignment: .topLeading)
                 } label: {
                     RestaurantRowView.init(viewModel: restaurantRowViewModel, restaurantRepository: restaurantRepository)

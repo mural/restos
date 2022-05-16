@@ -16,7 +16,7 @@ struct RestaurantsData: Codable, Equatable {
     }
 }
 
-// MARK: - Datum
+// MARK: - Restaurant
 struct Restaurant: Codable, Identifiable, Equatable {
     let id: UUID? = UUID()
     let name, uuid, servesCuisine: String
@@ -30,6 +30,10 @@ struct Restaurant: Codable, Identifiable, Equatable {
     static func == (lhs: Restaurant, rhs: Restaurant) -> Bool {
         lhs.id == rhs.id
     }
+    
+    func getFormattedAddress() -> String {
+        return "\(address.street), \(address.postalCode), \(address.locality), \(address.country)"
+    }
 }
 
 // MARK: - Address
@@ -41,11 +45,11 @@ struct Address: Codable {
 
 // MARK: - AggregateRatings
 struct AggregateRatings: Codable {
-    let thefork, tripadvisor: Thefork
+    let thefork, tripadvisor: RatingDetails
 }
 
-// MARK: - Thefork
-struct Thefork: Codable {
+// MARK: - RatingDetails
+struct RatingDetails: Codable {
     let ratingValue: Double
     let reviewCount: Int
 }

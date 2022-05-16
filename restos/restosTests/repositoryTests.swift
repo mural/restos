@@ -9,7 +9,7 @@ import XCTest
 @testable import restos
 import Combine
 
-class MockRestaurantService: RestaurantService {
+class MockRestaurantService: RestaurantServiceProtocol {
     
     var response: AnyPublisher<RestaurantsData, AppError>!
     
@@ -21,9 +21,9 @@ class MockRestaurantService: RestaurantService {
 
 class repositoryTests: XCTestCase {
 
-    let restaurantItem = Restaurant(name: "Restaurant name", uuid: "", servesCuisine: "Special", priceRange: 0, currenciesAccepted: "All", address: Address(street: "Street", postalCode: "12012", locality: "City", country: "Country"), aggregateRatings: AggregateRatings(thefork: Thefork(ratingValue: 4.4, reviewCount: 44), tripadvisor: Thefork(ratingValue: 3.3, reviewCount: 33)), mainPhoto: nil, bestOffer:  BestOffer.init(name: "Offer", label: "All 40%"))
+    let restaurantItem = Restaurant(name: "Restaurant name", uuid: "", servesCuisine: "Special", priceRange: 0, currenciesAccepted: "All", address: Address(street: "Street", postalCode: "12012", locality: "City", country: "Country"), aggregateRatings: AggregateRatings(thefork: RatingDetails(ratingValue: 4.4, reviewCount: 44), tripadvisor: RatingDetails(ratingValue: 3.3, reviewCount: 33)), mainPhoto: nil, bestOffer:  BestOffer.init(name: "Offer", label: "All 40%"))
     
-    private var restaurantRepository: RestaurantRepository!
+    private var restaurantRepository: RestaurantRepositoryProtocol!
     private var restaurantService: MockRestaurantService!
     private var cancellables: Set<AnyCancellable> = []
     
@@ -42,13 +42,11 @@ class repositoryTests: XCTestCase {
         try super.tearDownWithError()
     }
 
-    func testExample() throws {
-        let expectation = XCTestExpectation(description: "restaurants is with data")
+    func test_repository_get_restaurants_from_response() throws {
+        let expectation = XCTestExpectation(description: "Restaurants is with full data")
         
-        var restaurantsData = RestaurantsData.loadFromFile(type(of: self), fileName: "restaurants", type: "json")
+        let restaurantsData = RestaurantsData.loadFromFile(type(of: self), fileName: "restaurants", type: "json")
         restaurantService.response = Result.success(restaurantsData).publisher.eraseToAnyPublisher()
-        
-        //restaurantsData = RestaurantsData(data: restaurantsData.data.dropLast()) //TODO: create failing test with this one
         
         restaurantRepository.getRestaurants().sink(receiveCompletion: { _ in }, receiveValue: { value in
             XCTAssertEqual(value, restaurantsData)
@@ -58,7 +56,40 @@ class repositoryTests: XCTestCase {
         
         wait(for: [expectation], timeout: 3)
     }
+    
+    func test_repository_get_restaurants_from_response_not_match() throws {
+        let expectation = XCTestExpectation(description: "Restaurants is with data but do not match")
+        
+        var restaurantsData = RestaurantsData.loadFromFile(type(of: self), fileName: "restaurants", type: "json")
+        restaurantService.response = Result.success(restaurantsData).publisher.eraseToAnyPublisher()
+        restaurantsData = RestaurantsData(data: restaurantsData.data.dropLast())
+        
+        restaurantRepository.getRestaurants().sink(receiveCompletion: { _ in }, receiveValue: { value in
+            XCTAssertNotEqual(value, restaurantsData)
+            expectation.fulfill()
+            
+        }).store(in: &cancellables)
+        
+        wait(for: [expectation], timeout: 3)
+    }
 
+    func test_repository_get_restaurants_get_error() throws {
+        let expectation = XCTestExpectation(description: "Restaurants call gets error")
+        
+        restaurantService.response = Result.failure(AppError.network(description: "")).publisher.eraseToAnyPublisher()
+        restaurantRepository.getRestaurants().sink { value in
+            switch value {
+            case .failure:
+                XCTAssertEqual(value, Subscribers.Completion<AppError>.failure(AppError.network(description: "")))
+                expectation.fulfill()
+            case .finished:
+                break
+            }
+        } receiveValue: { _ in }
+        
+        wait(for: [expectation], timeout: 3)
+    }
+    
 }
 
 extension Decodable {

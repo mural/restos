@@ -11,9 +11,9 @@ import URLImage
 struct RestaurantRowView: View {
     
     private let viewModel: RestaurantRowViewModel
-    private let restaurantRepository: RestaurantRepository
+    private let restaurantRepository: RestaurantRepositoryProtocol
     
-    init(viewModel: RestaurantRowViewModel, restaurantRepository: RestaurantRepository) {
+    init(viewModel: RestaurantRowViewModel, restaurantRepository: RestaurantRepositoryProtocol) {
         self.viewModel = viewModel
         self.restaurantRepository = restaurantRepository
     }
@@ -21,34 +21,23 @@ struct RestaurantRowView: View {
     var body: some View {
         VStack(alignment: .leading) {
             VStack(alignment: .leading) {
-                HStack {
-                    
+                HStack {  
                     let url = URL(string: viewModel.photoURL)
-                    if (url != nil) { //TODO: ver estos checks
+                    if (url != nil) {
                         URLImage(url!) {
-                            // This view is displayed before download starts
                             EmptyView()
                         } inProgress: { progress in
-                            // Display progress
                             ActivityIndicator(style: .medium)
                         } failure: { error, retry in
-                            // Display error and retry button
-                            VStack {
-                                Text(error.localizedDescription)
-                                Button("Retry", action: retry)
-                            }
+                            imagePlaceholder
                         } content: { image in
-                            // Downloaded image
                             image
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 120, height: 80, alignment: .topLeading)
+                                .frame(width: 120, height: 80, alignment: .center)
                         }
                     } else {
-                        Image("ta-logo")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 120, height: 80, alignment: .topLeading)
+                        imagePlaceholder
                     }
                     
                     VStack(alignment: .leading) {
@@ -68,13 +57,29 @@ struct RestaurantRowView: View {
     }
 }
 
-//TODO: ver mejor lugar para esto
-let restaurantItem = Restaurant(name: "Restaurant name", uuid: "", servesCuisine: "Special", priceRange: 0, currenciesAccepted: "All", address: Address(street: "Street", postalCode: "12012", locality: "City", country: "Country"), aggregateRatings: AggregateRatings(thefork: Thefork(ratingValue: 4.4, reviewCount: 44), tripadvisor: Thefork(ratingValue: 3.3, reviewCount: 33)), mainPhoto: nil, bestOffer:  BestOffer.init(name: "Offer", label: "All 40%"))
+private extension RestaurantRowView {
+    var imagePlaceholder: some View {
+        Image("image-placeholder")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 120, height: 80, alignment: .center)
+    }
+    
+    var emptySection: some View {
+        Section {
+            Text("No restaurants")
+                .foregroundColor(.gray)
+        }
+    }
+    
+}
+
+let restaurantItemPreview = Restaurant(name: "Restaurant name", uuid: "", servesCuisine: "Special", priceRange: 0, currenciesAccepted: "All", address: Address(street: "Street", postalCode: "12012", locality: "City", country: "Country"), aggregateRatings: AggregateRatings(thefork: RatingDetails(ratingValue: 4.4, reviewCount: 44), tripadvisor: RatingDetails(ratingValue: 3.3, reviewCount: 33)), mainPhoto: nil, bestOffer:  BestOffer.init(name: "Offer", label: "All 40%"))
 
 struct RestaurantRowView_Previews: PreviewProvider {
     static var previews: some View {
         let repository = RestaurantRepositoryImplementation(restaurantService: RestaurantAPI(), managedObjectContext: PersistenceController.shared.container.viewContext)
-        let viewModel = RestaurantRowViewModel(item: restaurantItem)
+        let viewModel = RestaurantRowViewModel(item: restaurantItemPreview)
         
         RestaurantRowView(viewModel: viewModel, restaurantRepository: repository)
     }

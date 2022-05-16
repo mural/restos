@@ -46,8 +46,8 @@ struct FavoriteView: View {
 struct FavoriteView_Previews: PreviewProvider {
     
     static var previews: some View {
-        FavoriteView(viewModel: FavoriteViewModel(item: restaurantItem, restaurantRepository: RestaurantRepositoryImplementation(restaurantService: RestaurantAPI(), managedObjectContext: PersistenceController.shared.container.viewContext)), isFav: false)
+        FavoriteView(viewModel: FavoriteViewModel(item: restaurantItemPreview, restaurantRepository: RestaurantRepositoryImplementation(restaurantService: RestaurantAPI(), managedObjectContext: PersistenceController.shared.container.viewContext)), isFav: false)
         
-        FavoriteView(viewModel: FavoriteViewModel(item: restaurantItem, restaurantRepository: RestaurantRepositoryImplementation(restaurantService: RestaurantAPI(), managedObjectContext: PersistenceController.shared.container.viewContext)), isFav: true)
+        FavoriteView(viewModel: FavoriteViewModel(item: restaurantItemPreview, restaurantRepository: RestaurantRepositoryImplementation(restaurantService: RestaurantAPI(), managedObjectContext: PersistenceController.shared.container.viewContext)), isFav: true)
     }
 }

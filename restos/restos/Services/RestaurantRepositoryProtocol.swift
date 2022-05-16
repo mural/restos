@@ -7,30 +7,28 @@
 import Combine
 import CoreData
 
-protocol RestaurantRepository {
+protocol RestaurantRepositoryProtocol {
     func getRestaurants() -> AnyPublisher<RestaurantsData, AppError>
     func getFavoritesRestaurants() -> [String]
     func addRestaurantOnFavorites(uuid: String)
     func removeRestaurantFromFavorites(uuid: String)
 }
 
-class RestaurantRepositoryImplementation : RestaurantRepository {
-        
-    private let restaurantService: RestaurantService
+class RestaurantRepositoryImplementation : RestaurantRepositoryProtocol {
+     
+    @Published var restaurantFavoritesEntities: [RestaurantEntity] = []
+    private var fetchRequest : NSFetchRequest<RestaurantEntity> = RestaurantEntity.fetchRequest()
+    private var restaurantFavoritesUUIDs = [""]
+    private let restaurantService: RestaurantServiceProtocol
     private let managedObjectContext: NSManagedObjectContext
     
     init(
-        restaurantService: RestaurantService,
+        restaurantService: RestaurantServiceProtocol,
         managedObjectContext: NSManagedObjectContext
     ) {
         self.restaurantService = restaurantService
         self.managedObjectContext = managedObjectContext
     }
-    
-    private var fetchRequest : NSFetchRequest<RestaurantEntity> = RestaurantEntity.fetchRequest()
-    
-    @Published var restaurantFavoritesEntities: [RestaurantEntity] = []
-    private var restaurantFavoritesUUIDs = [""]
     
     func getFavoritesRestaurants() -> [String] {
         do {
