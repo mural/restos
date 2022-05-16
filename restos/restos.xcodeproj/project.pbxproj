@@ -19,7 +19,6 @@
 		FBC81425282EE5D400B63992 /* restos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FBC81423282EE5D400B63992 /* restos.xcdatamodeld */; };
 		FBC8142F282EE5D500B63992 /* viewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC8142E282EE5D500B63992 /* viewModelTests.swift */; };
 		FBC81439282EE5D500B63992 /* restosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC81438282EE5D500B63992 /* restosUITests.swift */; };
-		FBC8143B282EE5D500B63992 /* restosUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC8143A282EE5D500B63992 /* restosUITestsLaunchTests.swift */; };
 		FBC8144B282F03D000B63992 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC8144A282F03D000B63992 /* Restaurant.swift */; };
 		FBC8144D282F042900B63992 /* RestaurantFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC8144C282F042900B63992 /* RestaurantFetcher.swift */; };
 		FBC81452282F18E800B63992 /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = FBC81451282F18E800B63992 /* URLImage */; };
@@ -65,7 +64,6 @@
 		FBC8142E282EE5D500B63992 /* viewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewModelTests.swift; sourceTree = "<group>"; };
 		FBC81434282EE5D500B63992 /* restosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = restosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBC81438282EE5D500B63992 /* restosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = restosUITests.swift; sourceTree = "<group>"; };
-		FBC8143A282EE5D500B63992 /* restosUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = restosUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		FBC81449282EF1B500B63992 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FBC8144A282F03D000B63992 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		FBC8144C282F042900B63992 /* RestaurantFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantFetcher.swift; sourceTree = "<group>"; };
@@ -168,7 +166,6 @@
 			isa = PBXGroup;
 			children = (
 				FBC81438282EE5D500B63992 /* restosUITests.swift */,
-				FBC8143A282EE5D500B63992 /* restosUITestsLaunchTests.swift */,
 			);
 			path = restosUITests;
 			sourceTree = "<group>";
@@ -402,7 +399,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBC8143B282EE5D500B63992 /* restosUITestsLaunchTests.swift in Sources */,
 				FBC81439282EE5D500B63992 /* restosUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
