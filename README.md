@@ -9,9 +9,13 @@
 ## Technical choices
 - The app. was builded using the MVVM pattern architecture with a Repostory pattern
 - Protocols are used to have abstracions and not implementations so the code is decoupled and reliying on dependency injection testing is enhanced
-- SwiftUI has been selected to build the views
+- UIKit programatically was used to create the views by requirement, also there is a SwiftUI support module
 - Combine is helping with the functional reactive programming to communicate the diferents layers
 - Core data is storing the Favorites ID
+
+# UIKit <> SwiftUI config
+- set UI_MODE_SWIFT_UI to YES (1) to enable SwiftUI
+![Uploading image.png…]()
 
 ## Potential difficulties
 - Navigation is super simple at the moment
