@@ -98,6 +98,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.favoriteViewModel = restaurantRowViewModel.createFavoriteViewModel(restaurantRepository: restaurantRepository)
         cell.accessibilityIdentifier = restaurantRowViewModel.name
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
+        cell.accessoryType = .disclosureIndicator
         return cell
     }
     
