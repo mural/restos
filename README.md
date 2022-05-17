@@ -29,7 +29,12 @@
 - Separate Parsing objects from Domain ones and persistance ones
 - Improve UI, like adding animations, customize the iPad view
 
-## Screenshots
+## Screenshots UIKit
+
+![image](https://user-images.githubusercontent.com/759739/168875239-b2cdb199-6d44-4181-81ff-a1baf135f856.png)
+![image](https://user-images.githubusercontent.com/759739/168874991-928f9c98-2dc2-4d5d-8618-316741798643.png)
+
+## Screenshots SwiftUI
 
 ![image](https://user-images.githubusercontent.com/759739/168617211-f6005db6-fe7c-46d6-897e-9bd5c5670963.png)
 ![image](https://user-images.githubusercontent.com/759739/168617276-9bd1f270-3c9e-47ad-8b67-027eb93865c5.png)
