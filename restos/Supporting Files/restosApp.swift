@@ -27,8 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
-    
-    
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
@@ -38,16 +37,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let repository = RestaurantRepositoryImplementation(restaurantService: RestaurantAPI(), managedObjectContext: persistenceController.container.viewContext)
         let viewModel = RestaurantViewModel(restaurantRepository: repository)
         
-        // Create the SwiftUI view that provides the window contents.
-        let contentView = RestaurantsView(viewModel: viewModel, restaurantRepository: repository)
-                            .environment(\.managedObjectContext, persistenceController.container.viewContext)
+        let useUIKit = !BundleUtils.getUIModeSwiftUIEnabled()
         
-        // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
-            let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: contentView)
-            self.window = window
-            window.makeKeyAndVisible()
+            window = UIWindow(frame: windowScene.coordinateSpace.bounds)
+            window?.windowScene = windowScene
+            
+            if (useUIKit) {
+                let navigationVC = UINavigationController()
+                window?.rootViewController = navigationVC
+                let viewController = MainViewController(restaurantViewModel: viewModel, restaurantRepository: repository)
+                navigationVC.pushViewController(viewController!, animated: false)
+                
+            } else {
+                let contentView = RestaurantsView(viewModel: viewModel, restaurantRepository: repository)
+                                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                window?.rootViewController = UIHostingController(rootView: contentView)
+            }
+            window?.makeKeyAndVisible()
         }
     }
 }

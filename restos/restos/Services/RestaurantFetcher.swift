@@ -57,22 +57,10 @@ private extension RestaurantAPI {
     func makeRestosComponents() -> URLComponents {
         var components = URLComponents()
         components.scheme = RestosComponents.scheme
-        components.host = getAPIParams(param: "API_HOST")
-        components.path = getAPIParams(param: "API_PATH")
+        components.host = BundleUtils.getAPIParams(param: "API_HOST")
+        components.path = BundleUtils.getAPIParams(param: "API_PATH")
         
         return components
-    }
-
-    private func getAPIParams(param: String) -> String {
-        guard let filePath = Bundle.main.path(forResource: "Info", ofType: "plist") else {
-            return ""
-        }
-        let plist = NSDictionary(contentsOfFile: filePath)
-        guard let value = plist?.object(forKey: param) as? String else {
-            return ""
-        }
-        return value
-        
     }
 }
 

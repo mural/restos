@@ -32,17 +32,7 @@ struct MapView: UIViewRepresentable {
     }
     
     func updateUIView(_ view: MKMapView, context: Context) {
-        geocoder.geocodeAddressString(address) { [self] placemarks, error in
-            if let placemark = placemarks?.first, let location = placemark.location {
-                
-                let placeMark = RestoPlace(title: address, coordinate: location.coordinate)
-                mapView.addAnnotation(placeMark)
-                
-                let span = MKCoordinateSpan.init(latitudeDelta: 0.0015, longitudeDelta: 0.0015)
-                let region = MKCoordinateRegion(center: location.coordinate, span: span)
-                mapView.setRegion(region, animated: true)
-            }
-        }
-        
+        mapView.setMapWithGeocoderFromAdress(geocoder: geocoder, address: address)
     }
 }
+ 

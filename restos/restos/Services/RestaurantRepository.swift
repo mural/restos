@@ -15,12 +15,13 @@ protocol RestaurantRepositoryProtocol {
 }
 
 class RestaurantRepositoryImplementation : RestaurantRepositoryProtocol {
-     
+    
     var restaurantFavoritesEntities: [RestaurantEntity] = []
     private var fetchRequest : NSFetchRequest<RestaurantEntity> = RestaurantEntity.fetchRequest()
     private var restaurantFavoritesUUIDs = [""]
     private let restaurantService: RestaurantServiceProtocol
     private let managedObjectContext: NSManagedObjectContext
+    private let lock = NSRecursiveLock()
     
     init(
         restaurantService: RestaurantServiceProtocol,
@@ -51,27 +52,59 @@ class RestaurantRepositoryImplementation : RestaurantRepositoryProtocol {
     }
     
     func addRestaurantOnFavorites(uuid: String) {
-        let newItem = RestaurantEntity(context: managedObjectContext)
-        newItem.uuid = uuid
-
+        lock.lock()
         do {
-            try managedObjectContext.save()
+            fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \RestaurantEntity.uuid, ascending: true)]
+            restaurantFavoritesEntities = try managedObjectContext.fetch(fetchRequest)
+            
+            guard (restaurantFavoritesEntities.first(where: { entity in
+                entity.uuid == uuid
+            }) != nil) else {
+                let newItem = RestaurantEntity(context: managedObjectContext)
+                newItem.uuid = uuid
+                
+                do {
+                    try managedObjectContext.save()
+                    lock.unlock()
+                } catch {
+                    // Improve this with proper error handling
+                    print(error.localizedDescription)
+                    lock.unlock()
+                }
+                return
+            }
         } catch {
             // Improve this with proper error handling
             print(error.localizedDescription)
+            lock.unlock()
         }
+        lock.unlock()
     }
     
     func removeRestaurantFromFavorites(uuid: String) {
-        managedObjectContext.delete( restaurantFavoritesEntities.first { entity in
-            entity.uuid == uuid
-        }!)
-
+        lock.lock()
         do {
-            try managedObjectContext.save()
+            fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \RestaurantEntity.uuid, ascending: true)]
+            restaurantFavoritesEntities = try managedObjectContext.fetch(fetchRequest)
+            
+            if let entity = restaurantFavoritesEntities.first(where: { entity in
+                entity.uuid == uuid
+            }) {
+                managedObjectContext.delete(entity)
+                
+                do {
+                    try managedObjectContext.save()
+                    lock.unlock()
+                } catch {
+                    // Improve this with proper error handling
+                    print(error.localizedDescription)
+                    lock.unlock()
+                }
+            }
         } catch {
             // Improve this with proper error handling
             print(error.localizedDescription)
+            lock.unlock()
         }
     }
 }

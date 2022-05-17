@@ -14,18 +14,6 @@ class FavoriteViewModel: Identifiable, ObservableObject {
     private let item: Restaurant
     private let restaurantRepository: RestaurantRepositoryProtocol
     
-    var id: String {
-        return item.uuid
-    }
-    
-    var name: String {
-        return item.name
-    }
-    
-    var photoURL: String {
-        return item.mainPhoto?.the160X120 ?? ""
-    }
-    
     init(item: Restaurant, restaurantRepository: RestaurantRepositoryProtocol) {
         self.item = item
         self.restaurantRepository = restaurantRepository
