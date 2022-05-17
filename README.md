@@ -14,8 +14,8 @@
 - Core data is storing the Favorites ID
 
 # UIKit <> SwiftUI config
-- set UI_MODE_SWIFT_UI to YES (1) to enable SwiftUI
-![Uploading image.png…]()
+- set UI_MODE_SWIFT_UI to YES (1) to enable SwiftUI or NO (0) to use UIKit on the Info.plist file
+<img width="787" alt="image" src="https://user-images.githubusercontent.com/759739/168874755-c97a18fd-eece-4cca-bc19-19c2516f2c71.png">
 
 ## Potential difficulties
 - Navigation is super simple at the moment
